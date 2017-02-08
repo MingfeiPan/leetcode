@@ -79,7 +79,7 @@ int length(struct ListNode* l){
 }
 
 /**
- *better one
+ *better one,still slow 
  */
 struct ListNode* addTwoNumbers(struct ListNode* l1, struct ListNode* l2) {
     struct ListNode* head;
