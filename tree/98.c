@@ -1,5 +1,5 @@
 /**
- * 中序遍历之后, 通过检查时候有逆序对 来判断true false
+ * 中序遍历之后, 通过检查数列是否有逆序对 来判断true false, 应该有更直接的 不用转一步数组
  * Definition for a binary tree node.
  * struct TreeNode {
  *     int val;
