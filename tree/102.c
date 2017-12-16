@@ -31,7 +31,7 @@ void traverse(int*** s, int**columnSizes, int* returnSize, struct TreeNode* t, i
         *returnSize = depth + 1;
         *s = (int**)realloc(*s, (depth+1)*sizeof(int*));
         (*s)[depth] = NULL;
-        *columnSizes = (int*)realloc(*columnSizes, (depth+1)*sizeof(int*));
+        *columnSizes = (int*)realloc(*columnSizes, (depth+1)*sizeof(int));
         (*columnSizes)[depth] = 0;
     }
     (*s)[depth] = (int*)realloc((*s)[depth], ((*columnSizes)[depth]+1)*sizeof(int));
