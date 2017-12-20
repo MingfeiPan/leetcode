@@ -1,5 +1,5 @@
 /**
- * 中序后寻找
+ * 借助中序遍历
  * Definition for a binary tree node.
  * struct TreeNode {
  *     int val;
@@ -10,9 +10,9 @@
 int kthSmallest(struct TreeNode* root, int k) {
     if(root==NULL) return 0;
     struct TreeNode** s = (struct TreeNode**)malloc(sizeof(struct TreeNode*));
-    int* l = (int*)malloc(sizeof(int));
+    //int* l = (int*)malloc(sizeof(int));
     int length = 0;
-    int size = 0;
+    //int size = 0;
     while(true)
     {
         while(root)
@@ -21,11 +21,8 @@ int kthSmallest(struct TreeNode* root, int k) {
             s[length++] = root;
             root = root->left;
         }
-        if(length == 0) break;
         root = s[--length];
-        l = (int*)realloc(l, sizeof(int)*(size + 1));
-        l[size++] = root->val;
+        if(k-- == 1) return root->val;
         root = root->right;
     }
-    return l[k-1];
 }
