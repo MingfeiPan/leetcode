@@ -27,16 +27,6 @@ int* rightSideView(struct TreeNode* root, int* returnSize) {
     }
     return arr;
 }
-void traverse(int*** s, int** columnSizes, int* returnSize, struct TreeNode* t, int depth);
-
-int** levelOrder(struct TreeNode* root, int** columnSizes, int* returnSize) {
-    int*** s = (int***)malloc(sizeof(int**));
-    *s = NULL;
-    if(root==NULL) return *s;
-    *returnSize = 0;
-    traverse(s, columnSizes, returnSize, root, 0);
-    return *s;
-}
 
 void traverse(int*** s, int**columnSizes, int* returnSize, struct TreeNode* t, int depth)
 {
