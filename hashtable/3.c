@@ -38,7 +38,7 @@ void hash_destroy(hashtable* ht) {
 void hash_set(hashtable* ht, int key, int value) {
     int hash = abs(key) % ht->size;
 	ht_item* item;
-    item = malloc(sizeof(hashtable));
+    item = malloc(sizeof(ht_item));
     item->key = key;
     item->value = value;
     ht->storage[hash] = item;
