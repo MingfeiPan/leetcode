@@ -36,11 +36,6 @@ void swap(int* h1, int* h2)
 	*h2 = temp;
 }
 
-void heapify(maxheap* hp, int i)
-{
-	
-}
-
 //上溢
 void percolateUp(maxheap* hp, int i)
 {
