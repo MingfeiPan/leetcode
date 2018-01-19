@@ -60,7 +60,10 @@ void percolateDown(maxheap* hp, int index)
 			if((hp->arr)[lc] < (hp->arr)[index]) return;
 			else
 			{
-				swap(&((hp->arr)[index]), &((hp->arr)[lc]));
+				//swap(&((hp->arr)[index]), &((hp->arr)[lc]));
+				int temp = (hp->arr)[index];
+				(hp->arr)[index] = (hp->arr)[lc];
+				(hp->arr)[lc] = temp;
 				index = lc;
 			}
 		}
@@ -69,7 +72,10 @@ void percolateDown(maxheap* hp, int index)
 			if((hp->arr)[rc] < (hp->arr)[index]) return;
 			else
 			{
-				swap(&((hp->arr)[index]), &((hp->arr)[rc]));
+				//swap(&((hp->arr)[index]), &((hp->arr)[rc]));
+				int temp = (hp->arr)[index];
+				(hp->arr)[index] = (hp->arr)[rc];
+				(hp->arr)[rc] = temp;
 				index = rc;
 			}
 		}
@@ -77,7 +83,10 @@ void percolateDown(maxheap* hp, int index)
 		{
 			if((hp->arr)[lc] < (hp->arr)[index] && (hp->arr)[rc] < (hp->arr)[index]) return;
 			int num = (hp->arr)[lc] < (hp->arr)[rc] ? rc : lc;
-			swap(&((hp->arr)[index]), &((hp->arr)[num]));
+			//swap(&((hp->arr)[index]), &((hp->arr)[num]));
+			int temp = (hp->arr)[index];
+			(hp->arr)[index] = (hp->arr)[num];
+			(hp->arr)[num] = temp;
 			index = num;
 		}
 	}
@@ -110,7 +119,7 @@ int getMax(maxheap* hp)
 
 void buildHeap(maxheap* hp, int* arr, int size)
 {
-	hp->arr = malloc(sizeof(int)*(size + 1));
+	hp->arr = (int*)malloc(sizeof(int)*(size));
 	for(int i = 0; i < size; i++)
 	{
 		(hp->arr)[i] = arr[i];
@@ -129,7 +138,7 @@ int main()
 	maxheap hp = init();
 	int arr[] = {23,545,1,45465,145,65,24,5651,2456,4,32};
 	int length = sizeof(arr) / sizeof(arr[0]);
-	int count = 10;
+	int count = length;
 	buildHeap(&hp, arr, length);
 	while(count--)
 	{
@@ -141,16 +150,6 @@ int main()
 		printf("%d\n", temp);
 		delMax(&hp);
 	}
-	int test;
-	test = getMax(&hp);
-	printf("%d\n", test);
-	delMax(&hp);
-	test = getMax(&hp);
-	printf("%d\n", test);
-	delMax(&hp);
-	test = getMax(&hp);
-	printf("%d\n", test);
-	delMax(&hp);
 	return 0;
 }
 
