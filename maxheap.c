@@ -141,6 +141,16 @@ int main()
 		printf("%d\n", temp);
 		delMax(&hp);
 	}
+	int test;
+	test = getMax(&hp);
+	printf("%d\n", test);
+	delMax(&hp);
+	test = getMax(&hp);
+	printf("%d\n", test);
+	delMax(&hp);
+	test = getMax(&hp);
+	printf("%d\n", test);
+	delMax(&hp);
 	return 0;
 }
 
