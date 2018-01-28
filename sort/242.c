@@ -29,3 +29,25 @@ bool isAnagram(char* s, char* t) {
     return true;
     
 }
+
+//a O(n) solution
+bool isAnagram(char* s, char* t) {
+    int* arr = calloc(26, sizeof(int));
+    int len = strlen(s);
+    int len1 = strlen(t);
+    if(len != len1) return false;
+    int i;
+    for(i = 0; i < len; i++)
+    {
+        arr[s[i] - 'a']++;
+    }
+    for(i = 0; i < len; i++)
+    {
+        arr[t[i] - 'a']--;
+    }    
+    for(i = 0; i < 26; i++)
+    {
+        if(arr[i] < 0) return false;
+    }    
+    return true;
+}
