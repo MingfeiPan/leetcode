@@ -1,4 +1,4 @@
-//top-k 问题的统一实现O(n)实现, bfprt algorithm
+//top-k 问题的O(n)实现, bfprt algorithm
 #include <stdio.h>
 
 int bfprt(int*, int, int, int);
