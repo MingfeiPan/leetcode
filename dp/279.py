@@ -20,3 +20,24 @@ class Solution:
                 j += 1
         return ret[n]
         
+
+# c重写了之后accept
+int numSquares(int n) {
+    if(n <= 0)
+        return 0;
+    int i;
+    int ret[n+1];
+    int j;
+    ret[0] = 0;
+    for(i = 1; i <= n; i++)
+        ret[i] = n;
+    
+    for(i = 0; i <= n; i++){
+        j = 1;
+        while(i + j*j < n+1){
+            ret[i + j*j] = ret[i+ j*j] < ret[i] + 1 ? ret[i+ j*j] :  ret[i] + 1;
+            j++;
+        }
+    }
+    return ret[n];
+}
