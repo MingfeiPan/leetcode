@@ -19,5 +19,27 @@ class Solution:
         perm(nums, n)
         return ret
             
+#dfs
+class Solution:
+    def permute(self, nums):
+        """
+        :type nums: List[int]
+        :rtype: List[List[int]]
+        """
+        ret = []
+        self.dfs(ret, [], nums)
+        return ret
+        
+    def dfs(self, ret, temp, nums):
+        if len(temp) == len(nums):
+            ret.append(temp)
+        for i in range(0, len(nums)):
+            if nums[i] in temp:
+                continue
+            else:
+                self.dfs(ret, temp+[nums[i]], nums)
+        
             
+            
+             
         
