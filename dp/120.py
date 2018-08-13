@@ -44,7 +44,21 @@ class Solution:
             
                 
                 
+#better
+class Solution:
+    def minimumTotal(self, triangle):
+        """
+        :type triangle: List[List[int]]
+        :rtype: int
+        """
+        dp = copy.copy(triangle[-1])
+        depth = len(triangle) - 1
+        while depth > 0:
+            for i in range(len(triangle[depth-1])):
+                dp[i] = min(dp[i] + triangle[depth-1][i], dp[i+1] + triangle[depth-1][i])
+            depth -= 1
                 
+        return dp[0]
                 
         
         
