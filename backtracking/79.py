@@ -22,9 +22,9 @@ class Solution:
                 return False
             if word[index] == board[i][j]:
                 tmp = board[i][j]
-                board[i][j] = '.';
+                board[i][j] = '.'
                 ret = self.dfs(i-1,j,board, word, index+1) or self.dfs(i+1,j,board, word, index+1) or self.dfs(i,j-1,board, word, index+1) or self.dfs(i,j+1,board, word, index+1)
-                board[i][j] = tmp;
+                board[i][j] = tmp
                 return ret
             else:
-                return False;
+                return False
