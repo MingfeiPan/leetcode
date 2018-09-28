@@ -22,10 +22,10 @@ class HashTable(object):
 		h = hash(key) % self.table_size
 		if self.bucket[h] is None:
 			self.bucket[h] = []
-		for pair in self.bucket[h]:
-			if pair[0] == key:
-				pair[1] = value
-				return
+		# for pair in self.bucket[h]:
+		# 	if pair[0] == key:
+		# 		pair[1] = value
+		# 		return
 
 		self.bucket[h].append([key, value])
 		self.size += 1
@@ -59,6 +59,7 @@ class HashTable(object):
 		for i in self.bucket:
 			if i is None:
 				continue
+			yield('************')
 			for pair in i:
 				yield pair
 
@@ -96,13 +97,18 @@ def test():
 	for  i in range(14,21):
 		h[i] = "{}xxxxx".format(i)
 
+	h[33] = '33xxxxx'
+	del h[17]
 	print(h.isempty())
 	print(len(h))
+
 	for i in h.items():
 		print(i)	
 
 if __name__ == '__main__':
 	test()
+
+
 
 
 
