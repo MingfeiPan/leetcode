@@ -32,3 +32,32 @@ class Solution:
             else:
                 hi = mid - 1
         return -1
+
+
+class Solution:
+    def search(self, nums, target):
+        """
+        :type nums: List[int]
+        :type target: int
+        :rtype: int
+        """
+        
+        if not nums:
+            return -1
+        low = 0
+        high = len(nums) - 1
+        while low <= high:                
+            mid = (low+high) // 2
+            if target == nums[mid]:
+                return mid         
+            elif nums[mid] >= nums[low]:
+                if nums[low] <= target < nums[mid]:  #高区
+                    high = mid - 1
+                else:
+                    low = mid + 1
+            elif nums[mid] <= nums[high]:
+                if nums[mid] < target <= nums[high]: #低区
+                    low = mid + 1
+                else:
+                    high = mid - 1
+        return -1
