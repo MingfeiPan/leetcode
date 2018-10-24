@@ -51,12 +51,12 @@ class Solution:
             if target == nums[mid]:
                 return mid         
             elif nums[mid] >= nums[low]:
-                if nums[low] <= target < nums[mid]:  #高区
+                if nums[low] <= target < nums[mid]:  
                     high = mid - 1
                 else:
                     low = mid + 1
             elif nums[mid] <= nums[high]:
-                if nums[mid] < target <= nums[high]: #低区
+                if nums[mid] < target <= nums[high]:
                     low = mid + 1
                 else:
                     high = mid - 1
