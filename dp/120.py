@@ -44,7 +44,7 @@ class Solution:
             
                 
                 
-#better
+#O(n)空间复杂度的python3
 class Solution:
     def minimumTotal(self, triangle):
         """
@@ -61,4 +61,19 @@ class Solution:
         return dp[0]
                 
         
+
+#O(1)空间复杂度的python3, 利用当前层保存dp的结果
+class Solution:
+    def minimumTotal(self, triangle: List[List[int]]) -> int:
         
+        if len(triangle) <= 1:
+            return triangle[0][0]
+        depth_index = len(triangle) - 1
+        
+        while depth_index > 0:
+            for i in range(len(triangle[depth_index-1])):
+                triangle[depth_index-1][i] = min(triangle[depth_index][i], triangle[depth_index][i+1]) + triangle[depth_index-1][i]
+            depth_index -= 1
+                
+        return triangle[0][0]
+                
