@@ -3,7 +3,6 @@ func search(nums []int, target int) int {
         return -1
     }
     var high, low, mid int
-    
     high = len(nums) - 1
     for low <= high {
         mid = (high + low) / 2
@@ -36,7 +35,6 @@ func search(nums []int, target int) int {
     if len(nums) == 0 {
         return -1
     }
-    
     var high, low, mid, realmid, pivot int
     high = len(nums) - 1
     //find the pivot, pivot will be the smallest value as well
@@ -49,10 +47,8 @@ func search(nums []int, target int) int {
             high = mid
         }
     }
-    
     pivot = low //find pivot when low == high, where nums[low-1] > nums[high]
     low, high = 0, len(nums) - 1
-    
     //normal binary search with pivot high 
     for low <= high {
         mid = (low + high) / 2
@@ -67,5 +63,4 @@ func search(nums []int, target int) int {
         }
     }
     return -1
-    
 }
