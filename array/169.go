@@ -14,3 +14,23 @@ func majorityElement(nums []int) int {
     
     return nums[0]
 }
+
+func majorityElement(nums []int) int {
+    var (
+        num int
+        count int
+    )
+    for _, v := range nums {
+        if count == 0 {
+            num = v
+            count++
+        }else {
+            if num == v {
+                count++
+            }else {
+                count--
+            }
+        }
+    }
+    return num
+}
