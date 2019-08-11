@@ -1,50 +1,48 @@
-strStr(haystack string, needle string) int {
-    if needle == "" {
-        return 0
-    }
-	var curMatch string
-	var matchLength int
-	curIndex := -1
+func strStr(haystack string, needle string) int {
+	if needle == "" {
+		return 0
+	}
+	prefixTable := getPrefixTable(needle)
+	var j int
 	for i := 0; i < len(haystack); {
-		for j := 0; j < len(needle); {
-			if i == len(haystack) {
-				fmt.Println(curMatch)
-				//end of haystack
-				return -1
-			}
-			if haystack[i] == needle[j] {
-				curIndex = i
-				curMatch += string(needle[j])
-				//find a match
-				if curMatch == needle {
-					return curIndex - len(needle) + 1
-				}
-				i++
-				j++
+		if haystack[i] == needle[j] {
+			// 匹配, 查下一个
+			j++
+			i++
+		} else {
+			if j > 0 {
+				//不匹配, 尝试前一个prefix
+				j = prefixTable[j-1]
 			} else {
-				if curMatch == "" {
-					i++
-				} else {
-					matchLength = findPartialMatch(curMatch)
-					fmt.Println(curMatch)
-					j -= len(curMatch) - matchLength
-					// i += len(curMatch) - matchLength
-					curMatch = curMatch[:matchLength]
-				}
+				i++
 			}
+		}
+		if j == len(needle) {
+			//找到匹配
+			return i - j
 		}
 	}
 	return -1
 }
 
-func findPartialMatch(s string) int {
-	var matchLength int
-	for i := 1; i < len(s); i++ {
-		if s[0:i] == s[len(s)-i:len(s)] {
-			matchLength = i
+//自身做一次kmp匹配
+func getPrefixTable(s string) []int {
+	l := make([]int, len(s))
+	var j int
+	for i := 1; i < len(s); {
+		if s[i] == s[j] {
+			//有匹配该位置匹配值+1
+			l[i] = j + 1
+			j++
+			i++
+		} else {
+			if j > 0 {
+				//无匹配缩小j到前一个值
+				j = l[j-1]
+			} else {
+				i++
+			}
 		}
-		//fmt.Println("prefix ", s[0:i])
-		//fmt.Println("postfix ", s[len(s)-i:len(s)])
 	}
-	return matchLength
+	return l
 }

@@ -4,67 +4,58 @@ import (
 	"fmt"
 )
 
-func kmp(source, target string) int {
-	var curMatch string
-	var matchLength int
-	curIndex := -1
-	for i := 0; i < len(source); {
-		for j := 0; j < len(target); {
-			if i == len(source) {
-				fmt.Println(curMatch)
-				//end of source
-				return -1
-			}
-			if source[i] == target[j] {
-				curIndex = i
-				curMatch += string(target[j])
-				//find a match
-				if curMatch == target {
-					return curIndex - len(target) + 1
-				}
-				i++
-				j++
+func strStr(haystack string, needle string) int {
+	if needle == "" {
+		return 0
+	}
+	prefixTable := getPrefixTable(needle)
+	var j int
+	for i := 0; i < len(haystack); {
+		if haystack[i] == needle[j] {
+			// 匹配, 查下一个
+			j++
+			i++
+		} else {
+			if j > 0 {
+				//不匹配, 尝试前一个prefix
+				j = prefixTable[j-1]
 			} else {
-				if curMatch == "" {
-					i++
-				} else {
-					matchLength = findPartialMatch(curMatch)
-					fmt.Println(curMatch)
-					j -= len(curMatch) - matchLength
-					// i += len(curMatch) - matchLength
-					curMatch = curMatch[:matchLength]
-				}
+				i++
 			}
+		}
+		if j == len(needle) {
+			//找到匹配
+			return i - j + 1
 		}
 	}
 	return -1
 }
 
-func findPartialMatch(s string) int {
-	var matchLength int
-	for i := 1; i < len(s); i++ {
-		if s[0:i] == s[len(s)-i:len(s)] {
-			matchLength = i
+//自身做一次kmp匹配
+func getPrefixTable(s string) []int {
+	l := make([]int, len(s))
+	var j int
+	for i := 1; i < len(s); {
+		if s[i] == s[j] {
+			//有匹配该位置匹配值+1
+			l[i] = j + 1
+			j++
+			i++
+		} else {
+			if j > 0 {
+				//无匹配缩小j到前一个值
+				j = l[j-1]
+			} else {
+				i++
+			}
 		}
-		//fmt.Println("prefix ", s[0:i])
-		//fmt.Println("postfix ", s[len(s)-i:len(s)])
 	}
-	return matchLength
-}
-
-func max(s []int) int {
-	max := -1
-	for _, v := range s {
-		if max < v {
-			max = v
-		}
-	}
-	return max
+	return l
 }
 
 func main() {
-	source := "bbc abcdab abcdabcdabde"
-	target := "abcdabd"
+	source := "mississippi"
+	target := "issip"
 	index := kmp(source, target)
 	fmt.Println("match at ", index)
 	fmt.Println("match ", source[index:index+len(target)])
