@@ -31,7 +31,7 @@ func strStr(haystack string, needle string) int {
 	return -1
 }
 
-//自身做一次kmp匹配
+// 自身做一次kmp匹配
 func getPrefixTable(s string) []int {
 	l := make([]int, len(s))
 	var j int
@@ -53,10 +53,50 @@ func getPrefixTable(s string) []int {
 	return l
 }
 
+func forceCompare(haystack string, needle string) int {
+	var i, j int
+	for i, j = 0, 0; i < len(haystack) && j < len(needle); {
+		if haystack[i] == needle[j] {
+			i++
+			j++
+		} else {
+			i = i - j + 1
+			j = 0
+		}
+	}
+	if j == len(needle) {
+		return i - j
+	} else {
+		return -1
+	}
+}
+
+func getPrefixTable1(s string) []int {
+	l := make([]int, len(s))
+	var curStr string
+	var curLen int
+	for i := 1; i < len(s); i++ {
+		fmt.Println(s[0 : i+1])
+		curStr = s[0 : i+1]
+		curLen = 0
+		for j := 1; j < len(curStr); j++ {
+			if s[0:j] == s[len(curStr)-j:len(curStr)] {
+				if len(s[0:j]) > curLen {
+					curLen = len(s[0:j])
+				}
+			}
+		}
+		l[i] = curLen
+	}
+	return l
+}
+
 func main() {
-	source := "mississippi"
-	target := "issip"
-	index := kmp(source, target)
-	fmt.Println("match at ", index)
-	fmt.Println("match ", source[index:index+len(target)])
+	// source := "mississippi"
+	target := "abcabcabcabc"
+	l := getPrefixTable(target)
+	fmt.Println(l)
+	// index := forceCompare(source, target)
+	// fmt.Println("match at ", index)
+	// fmt.Println("match ", source[index:index+len(target)])
 }
