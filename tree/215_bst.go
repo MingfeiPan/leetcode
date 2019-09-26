@@ -40,8 +40,8 @@ func (t *TreeNode) delete (val int) *TreeNode {
         t.Right = t.Right.delete(val)
     }else {
         if t.Left != nil && t.Right != nil {
-            t.Val = t.Right.getmax().Val
-            t.Right = t.Right.delete(t.Val)
+            t.Val = t.Left.getmax().Val
+            t.Left = t.Left.delete(t.Val)
         }else if t.Left == nil && t.Right == nil {
             t = nil
         }else if t.Left == nil {
