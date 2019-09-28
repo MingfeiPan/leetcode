@@ -44,14 +44,18 @@ func BuildMap(nums []int) map[int]int {
 }
 
 func (h *Heap) Insert(val int, freq int) {
-	if h.Size < h.Capacity {
-		ele := Element{val, freq}
+	if h.Size < h.Capacity - 1 {
+		ele := Element{Val: val, Freq: freq}
 		h.El = append(h.El, &ele)
-		curpos := h.Size
 		h.Size++
-		for h.El[curpos].Freq < h.El[curpos/2].Freq {
-			h.El[curpos], h.El[curpos/2] = h.El[curpos/2], h.El[curpos]
-			curpos = curpos / 2
+	} else if h.Size == h.Capacity-1 {
+
+		// heap 初始化满时, 做一次整体heapify
+		ele := Element{Val: val, Freq: freq}
+		h.El = append(h.El, &ele)
+		h.Size++
+		for i := h.Size / 2; i > -1; i-- {
+			h.Heapify(i)
 		}
 	} else {
 		if freq > h.El[0].Freq {
