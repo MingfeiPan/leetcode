@@ -49,9 +49,9 @@ func (h *heap) Insert(val int) {
 		h.list = append(h.list, val)
 		pos := h.cursize
 		h.cursize++
-		for h.list[pos] < h.list[pos/2] {
-			h.list[pos], h.list[pos/2] = h.list[pos/2], h.list[pos]
-			pos = pos / 2
+        for h.list[pos] < h.list[(pos-1)/2] {
+            h.list[pos], h.list[(pos-1)/2] = h.list[(pos-1)/2], h.list[pos]
+            pos = (pos-1) / 2
 		}
 	} else {
 		if val <= h.list[0] {
