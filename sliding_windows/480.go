@@ -1,4 +1,4 @@
-mport "sort"
+import "sort"
 
 func binarySearch(nums []int, num int) int {
     if len(nums) == 0 {
