@@ -16,7 +16,7 @@ func myAtoi(str string) int {
     }else if index < length && str[index] == '+' {
         index++
     }
-    for index < length && byte(str[index]) <= 57 && byte(str[index]) >= 48 && ret < math.MaxInt32{
+    for index < length && str[index] <= 57 && str[index] >= 48 && ret < math.MaxInt32{
         ret *= 10
         ret += int(str[index]) - 48
         index++
