@@ -31,3 +31,31 @@ func run(s string, k int) bool {
     }
     return true
 }
+
+
+// TLE
+
+func canMakePaliQueries(s string, queries [][]int) []bool {
+    dp := make([][]int, len(s)+1)
+    ret := make([]bool, 0)
+    for i, _ := range dp {
+        dp[i] = make([]int, 26)
+    }
+    for i := 0; i < len(s); i++ {
+        copy(dp[i+1], dp[i])
+        // fmt.Println((s[i])-97)
+        dp[i+1][s[i]-97]++
+    }
+    for _, query := range queries {
+        var count int
+        for i := 0; i < 26; i++ {
+            count += (dp[query[1]+1][i] - dp[query[0]][i]) % 2
+        }
+        if count / 2 <= query[2] {
+            ret = append(ret, true)
+        }else {
+            ret = append(ret, false)
+        }
+    }
+    return ret
+}
