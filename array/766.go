@@ -1,3 +1,4 @@
+// 查看每个对角线上的元素与其左上角元素是否相同
 func isToeplitzMatrix(matrix [][]int) bool {
     for i := 0; i < len(matrix); i++ {
         for j := 0; j < len(matrix[0]); j++ {
