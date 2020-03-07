@@ -2,6 +2,8 @@ type Item struct {
     word string
     step int
 }
+
+//注意区分dfs与bfs
 func ladderLength(beginWord string, endWord string, wordList []string) int {
     wordMap := make(map[string]struct{})
     queue := make([]Item, 0)
