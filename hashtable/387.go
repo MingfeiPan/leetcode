@@ -19,3 +19,24 @@ func firstUniqChar(s string) int {
     }
     return ret
 }
+
+type Item struct {
+    count int
+    index int
+}
+func firstUniqChar(s string) int {
+    m := make(map[rune]*Item)
+    for i, c := range s {
+        if _, ok := m[c]; ok {
+            m[c].count++    
+        }else {
+            m[c] = &Item{1, i}
+        }
+    }
+    for _, c := range s {
+        if m[c].count == 1 {
+            return m[c].index
+        }
+    }
+    return -1
+}
