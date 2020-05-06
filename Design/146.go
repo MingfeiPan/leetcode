@@ -1,89 +1,99 @@
 type LRUCache struct {
-	m        map[int]*Node
-	size     int
-	capacity int
-	head     *Node
-	tail     *Node
+    queue *Queue
+    m map[int]*Node
 }
 
 type Node struct {
-	key int
-	val  int
-	pre  *Node
-	next *Node
+    key int
+    val int
+    pre *Node
+    next *Node
 }
+
+type Queue struct {
+    size int
+    capacity int
+    head *Node
+    tail *Node
+}
+
 
 func Constructor(capacity int) LRUCache {
-	mainmap := LRUCache{
-		m:        make(map[int]*Node),
-		size:     0,
-		capacity: capacity,
-        head:     &Node{-1, -1, nil, nil},
-        tail:     &Node{-1, -1, nil, nil},
-	}
-    mainmap.head.next = mainmap.tail
-    mainmap.tail.pre = mainmap.head
-	return mainmap
+    head := &Node{-1, -1, nil, nil}
+    tail := &Node{-1, -1, nil, nil}
+    head.next = tail
+    tail.pre = head
+    queue := &Queue{0, capacity, head, tail}
+    m := make(map[int]*Node)
+    return LRUCache{queue, m}
 }
+
 
 func (this *LRUCache) Get(key int) int {
-	if node, ok := this.m[key]; !ok {
-		return -1
-	} else {
-		node.pre.next = node.next
-		node.next.pre = node.pre
-        temp := this.tail.pre
-        temp.next = node
-        node.pre = temp
-        node.next = this.tail
-		this.tail.pre = node
-		return node.val
-	}
+    if node, ok := this.m[key]; !ok {
+        return -1
+    }else {
+        // found, update queue
+        // remove from cur pos
+        node.pre.next = node.next
+        node.next.pre = node.pre
+        // move to the head
+        head := this.queue.head
+        node.next = head.next
+        head.next.pre = node
+        head.next = node
+        node.pre = head
+        return node.val
+    }
 }
 
-func (this *LRUCache) Put(key int, value int) {
-    // fmt.Println(this.m)
-	if _, ok := this.m[key]; !ok {
-		if this.size < this.capacity {
-            newnode := &Node{key, value, nil, nil}
-            this.m[key] = newnode
-            this.size++
-            temp := this.tail.pre
-            temp.next = newnode
-            newnode.pre = temp
-            newnode.next = this.tail
-            this.tail.pre = newnode
-		} else {
-			newnode := &Node{key, value, nil, nil}
 
-			//move head
-			delete(this.m, this.head.next.key)
-			temp := this.head.next.next
-			temp.pre = this.head
-			this.head.next = temp
-			//add tail
-			this.m[key] = newnode
-			temp = this.tail.pre
-			temp.next = newnode
-			newnode.pre = temp
-			newnode.next = this.tail
-			this.tail.pre = newnode
-		}
-	} else {
-		// when put is success, update
-		this.m[key].val = value
-        node := this.m[key]
-		node.pre.next = node.next
-		node.next.pre = node.pre
-        temp := this.tail.pre
-        temp.next = node
-        node.pre = temp
-        node.next = this.tail
-		this.tail.pre = node		
-
-	}
-    // fmt.Println(this.m)
+func (this *LRUCache) Put(key int, value int)  {
+    if node, ok := this.m[key]; ok {
+        // update
+        this.m[key].val = value
+        // remove from cur pos
+        node.pre.next = node.next
+        node.next.pre = node.pre
+        // move to the head
+        head := this.queue.head
+        node.next = head.next
+        head.next.pre = node
+        head.next = node
+        node.pre = head        
+    }else {
+        // insert
+        if this.queue.size < this.queue.capacity {
+            node := &Node{key, value, nil, nil}
+            // move to the head
+            head := this.queue.head
+            node.next = head.next
+            head.next.pre = node
+            head.next = node
+            node.pre = head  
+            this.queue.size++
+            this.m[key] = node
+        }else {
+            // remove the tail one
+            tail := this.queue.tail.pre
+            delete(this.m, tail.key)
+            tail.pre.next = this.queue.tail
+            this.queue.tail.pre = tail.pre
+            
+            node := &Node{key, value, nil, nil}
+            // move to the head
+            head := this.queue.head
+            node.next = head.next
+            head.next.pre = node
+            head.next = node
+            node.pre = head  
+            this.queue.size++
+            this.m[key] = node
+            
+        }
+    }
 }
+
 
 /**
  * Your LRUCache object will be instantiated and called as such:
@@ -91,4 +101,3 @@ func (this *LRUCache) Put(key int, value int) {
  * param_1 := obj.Get(key);
  * obj.Put(key,value);
  */
-
