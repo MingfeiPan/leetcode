@@ -18,3 +18,25 @@ func findMaxLength(nums []int) int {
     }
     return ret
 }
+
+
+func findMaxLength(nums []int) int {
+    var count, ret int
+    m := make(map[int]int)
+    m[0] = -1
+    for i, v := range nums {
+        if v == 0 {
+            count--
+        }else {
+            count++
+        }
+        if index, ok := m[count]; ok {
+            if i - index > ret {
+                ret = i - index
+            }
+        }else {
+            m[count] = i
+        }
+    }
+    return ret    
+}
