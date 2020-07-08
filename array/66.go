@@ -17,3 +17,19 @@ func plusOne(digits []int) []int {
     }
     return digits
 }
+
+func plusOne(digits []int) []int {
+    flag := 1
+    index := len(digits)-1
+    for flag > 0 && index >= 0 {
+        if digits[index] < 9 {
+            digits[index]++
+            return digits
+        }else {
+            digits[index] = 0
+            index--
+        }
+    }
+    return append([]int{1}, digits...)
+    
+}
