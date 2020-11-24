@@ -2,7 +2,6 @@ class Solution {
 public:
     bool search(vector<int>& nums, int target) {
         int pivot = findMid(nums);
-        std::cout << pivot << std::endl;
         int low = 0, high = nums.size() - 1, mid = 0, realmid = 0;
         while (low <= high) {
             mid = (low + high) / 2;
