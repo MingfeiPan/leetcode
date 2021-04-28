@@ -49,3 +49,29 @@ public:
         return dp[obstacleGrid.size()-1][obstacleGrid[0].size()-1];
     }
 };
+
+
+class Solution {
+public:
+    int uniquePathsWithObstacles(vector<vector<int>>& obstacleGrid) {
+        std::vector<std::vector<int>> dp;
+        for (size_t i = 0; i < obstacleGrid.size(); ++i) {
+            std::vector<int> cur(obstacleGrid[i].size(), -1);
+            dp.emplace_back(std::move(cur));
+        }
+        for (size_t i = 0; i < obstacleGrid.size(); ++i) {
+            for (size_t j = 0; j < obstacleGrid[0].size(); ++j) {
+                if (i == 0 && j == 0) {
+                    dp[i][j] = obstacleGrid[i][j] == 1 ? 0 : 1;
+                } else if (i == 0 && j != 0) {
+                    dp[i][j] = obstacleGrid[i][j] == 1 ? 0 : dp[i][j-1];
+                } else if (i != 0 && j == 0) {
+                    dp[i][j] = obstacleGrid[i][j] == 1 ? 0 : dp[i-1][j];
+                } else {
+                    dp[i][j] = obstacleGrid[i][j] == 1 ? 0 : (dp[i][j-1] + dp[i-1][j]);
+                }
+            }
+        }
+        return dp[obstacleGrid.size()-1][obstacleGrid[0].size()-1];
+    }
+};
