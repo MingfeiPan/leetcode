@@ -22,3 +22,22 @@ public:
         return start_index;
     }
 };
+
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+        int cur = 0, index = 0, total = 0;
+        for (int i = 0; i < gas.size(); ++i) {
+            int left = gas[i] - cost[i];
+            cur += left;
+            total += left;
+            if (cur < 0) {
+                index = i+1;
+                cur = 0;
+            }
+        }
+        if (total < 0)
+            return -1;
+        return index;
+    }
+};
