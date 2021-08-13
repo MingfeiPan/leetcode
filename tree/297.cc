@@ -34,7 +34,7 @@ private:
     }
     
     TreeNode* mydeserialize(istringstream& in) {
-        string val;
+        std::string val;
         in >> val;
         if (val == "#") {
             return nullptr;
