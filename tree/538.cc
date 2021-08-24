@@ -102,3 +102,40 @@ public:
         return dummy;
     }
 };
+
+/**
+ * Definition for a binary tree node.
+ * struct TreeNode {
+ *     int val;
+ *     TreeNode *left;
+ *     TreeNode *right;
+ *     TreeNode() : val(0), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x) : val(x), left(nullptr), right(nullptr) {}
+ *     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
+ * };
+ */
+class Solution {
+public:
+    TreeNode* convertBST(TreeNode* root) {
+        if (!root)
+            return root;
+        TreeNode *dummy = root;
+        std::stack<TreeNode*> s;
+        int sum = 0;
+        while (true) {
+            while (root) {
+                s.push(root);
+                root = root->right;
+            }
+            if (s.empty())
+                break;
+            root = s.top();
+            s.pop();
+            int temp = sum;
+            sum += root->val;
+            root->val += temp;
+            root = root->left;
+        }
+        return dummy;
+    }
+};
