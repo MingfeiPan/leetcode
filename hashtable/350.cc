@@ -33,3 +33,28 @@ public:
         return ret;
     }
 };
+
+
+class Solution {
+public:
+    vector<int> intersect(vector<int>& nums1, vector<int>& nums2) {
+        std::unordered_map<int, int> m1, m2;
+        for (const auto& num : nums1) {
+            m1[num] += 1;
+        }
+        for (const auto& num : nums2) {
+            m2[num] += 1;
+        }
+        std::vector<int> ret;
+        for (const auto& [key, value] : m1) {
+            if (m2[key] > 0) {
+                int count = std::min(value, m2[key]);
+                while (count > 0) {
+                    ret.emplace_back(std::move(key));
+                    --count;
+                }
+            }
+        }
+        return ret;
+    }
+};
