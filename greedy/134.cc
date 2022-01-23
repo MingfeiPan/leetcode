@@ -41,3 +41,21 @@ public:
         return index;
     }
 };
+
+
+class Solution {
+public:
+    int canCompleteCircuit(vector<int>& gas, vector<int>& cost) {
+        int index = 0, max = INT_MAX, total = 0;
+        for (int i = 0; i < gas.size(); ++i) {
+            total += gas[i] - cost[i];
+            if (total < max) {
+                index = i+1;
+                max = total;
+            }
+        }
+        if (total < 0)
+            return -1;
+        return index % gas.size();
+    }
+};
