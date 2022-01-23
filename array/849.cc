@@ -26,3 +26,22 @@ public:
         return ret;
     }
 };
+
+
+class Solution {
+public:
+    int maxDistToClosest(vector<int>& seats) {
+        int last1 = -1, ret = 0;
+        int len = seats.size();
+        for (int i = 0; i < len; ++i) {
+            if (seats[i] == 1) last1 = i;
+            if (last1 == -1) {
+                ret = i+1;
+            } else {
+                ret = std::max(ret, (i-last1+1)/2);
+            }
+        }
+        ret = std::max(ret, len-last1-1);
+        return ret;
+    }
+};
