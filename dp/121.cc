@@ -38,3 +38,15 @@ public:
         return nothold0;
     }
 };
+
+class Solution {
+public:
+    int maxProfit(vector<int>& prices) {
+        int cur = INT_MAX, ret = 0;
+        for (const auto& price : prices) {
+            ret = std::max(ret, price - cur);
+            cur = std::min(cur, price);
+        }
+        return ret;
+    }
+};
