@@ -25,3 +25,24 @@ class Solution {
         return true;
     }
 }
+
+
+class Solution {
+public:
+    bool isValid(string s) {
+        std::stack<char> st;
+        for (const auto& c : s) {
+            if (c == '(' || c == '{' || c == '[') {
+                st.emplace(std::move(c));
+            } else {
+                if (st.empty()) return false;
+                auto cur = st.top();
+                if (c == ')' && cur != '(') return false;
+                if (c == '}' && cur != '{') return false;
+                if (c == ']' && cur != '[') return false;
+                st.pop();
+            }
+        }
+        return st.empty();
+    }
+};
