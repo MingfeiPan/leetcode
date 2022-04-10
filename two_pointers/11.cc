@@ -13,3 +13,20 @@ public:
         return ret;
     }
 };
+
+class Solution {
+public:
+    int maxArea(vector<int>& height) {
+        int left = 0, right = height.size()-1, ret = 0;
+        while (left < right) {
+            if (height[left] < height[right]) {
+                ret = std::max(ret, height[left] * (right - left));
+                ++left;
+            } else {
+                ret = std::max(ret, height[right] * (right - left));
+                --right;
+            }
+        }
+        return ret;
+    }
+};
